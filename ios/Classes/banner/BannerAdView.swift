@@ -16,7 +16,7 @@ class UnityBanner : NSObject, FlutterPlatformView {
         self.messeneger = messeneger
         self.frame = frame
         self.viewId = viewId
-        channel = FlutterMethodChannel(name: UnityAdsConstants.BANNER_AD_CHANNEL + "_" + String(args[UnityAdsConstants.PLACEMENT_ID_PARAMETER]), binaryMessenger: messeneger)
+        channel = FlutterMethodChannel(name: UnityAdsConstants.BANNER_AD_CHANNEL + "_" + String(describing: args[UnityAdsConstants.PLACEMENT_ID_PARAMETER]), binaryMessenger: messeneger)
 
 
 

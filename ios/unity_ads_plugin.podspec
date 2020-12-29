@@ -3,7 +3,7 @@
 # Run pod lib lint unity_ads.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'unity_ads'
+  s.name             = 'unity_ads_plugin'
   s.version          = '0.0.1'
   s.summary          = 'Flutter unity ads plugin.'
   s.description      = <<-DESC

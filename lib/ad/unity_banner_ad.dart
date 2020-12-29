@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +39,7 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
 
   @override
   Widget build(BuildContext context) {
-    // if (defaultTargetPlatform == TargetPlatform.android) {
+    if (Platform.isAndroid) {
       return Container(
         height: widget.size.height + 0.0,
         width: widget.size.width + 0.0,
@@ -57,7 +59,27 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
           ),
         )
       );
-    // }
+    } else if (Platform.isIOS) {
+      return Container(
+          height: widget.size.height + 0.0,
+          width: widget.size.width + 0.0,
+          child: OverflowBox(
+            maxHeight: _isLoaded ? widget.size.height + 0.0 : 1,
+            minHeight: 0.1,
+            alignment: Alignment.bottomCenter,
+            child: UiKitView(
+              viewType: bannerAdChannel,
+              creationParams: <String, dynamic>{
+                placementIdParameter: widget.placementId,
+                widthParameter: widget.size.width,
+                heightParameter: widget.size.height,
+              },
+              creationParamsCodec: StandardMessageCodec(),
+              onPlatformViewCreated: _onBannerAdViewCreated,
+            ),
+          )
+      );
+    }
 
     // return Container();
   }

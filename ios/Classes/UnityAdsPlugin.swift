@@ -11,7 +11,7 @@ public class UnityAdsPlugin:NSObject,FlutterPlugin {
         let instance = UnityAdsPlugin(methodChannel: channel, mMesseneger:registrar.messenger());
 
         registrar.addMethodCallDelegate(instance, channel: channel)
-         registrar.register(
+        registrar.register(
                 BannerFactory(messeneger: registrar.messenger()),
                 withId: UnityAdsConstants.BANNER_AD_CHANNEL
             )

@@ -1,14 +1,14 @@
 import Flutter
 import UnityAds
 
-public class UnityAdsPlugin:NSObject,FlutterPlugin {
+public class UnityAdsPluginImpl:NSObject,FlutterPlugin {
 
     let mChannel: FlutterMethodChannel;
     var mViewController: UIViewController?;
     private var mMesseneger: FlutterBinaryMessenger
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: UnityAdsConstants.MAIN_CHANNEL, binaryMessenger: registrar.messenger())
-        let instance = UnityAdsPlugin(methodChannel: channel, mMesseneger:registrar.messenger());
+        let instance = UnityAdsPluginImpl(methodChannel: channel, mMesseneger:registrar.messenger());
 
         registrar.addMethodCallDelegate(instance, channel: channel)
         registrar.register(

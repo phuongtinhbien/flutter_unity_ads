@@ -7,6 +7,7 @@
             binaryMessenger:[registrar messenger]];
   UnityAdsPlugin* instance = [[UnityAdsPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
+
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {

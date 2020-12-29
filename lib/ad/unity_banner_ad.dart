@@ -37,7 +37,7 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    // if (defaultTargetPlatform == TargetPlatform.android) {
       return Container(
         height: widget.size.height + 0.0,
         width: widget.size.width + 0.0,
@@ -55,11 +55,11 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
             creationParamsCodec: StandardMessageCodec(),
             onPlatformViewCreated: _onBannerAdViewCreated,
           ),
-        ),
+        )
       );
-    }
+    // }
 
-    return Container();
+    // return Container();
   }
 
   void _onBannerAdViewCreated(int id) async {

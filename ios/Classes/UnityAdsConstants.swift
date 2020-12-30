@@ -26,4 +26,5 @@ struct UnityAdsConstants {
     static let BANNER_ERROR_METHOD = "banner_error"
     static let BANNER_LOADED_METHOD = "banner_loaded"
     static let BANNER_CLICKED_METHOD = "banner_clicked"
+    static let BANNER_SET_LISTENER = "banner_set_listener"
 }

@@ -114,10 +114,10 @@ class AdManager {
   }
 
   static String get interstitialVideoAdPlacementId {
-    return 'your_interstitial_video_ad_placement_id';
+    return 'video';
   }
 
   static String get rewardedVideoAdPlacementId {
-    return 'your_rewarded_video_ad_placement_id';
+    return 'rewardedVideo';
   }
 }

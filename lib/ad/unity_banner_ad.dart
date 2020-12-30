@@ -61,12 +61,13 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
       );
     } else if (Platform.isIOS) {
       return Container(
+        color: Colors.red,
           height: widget.size.height + 0.0,
           width: widget.size.width + 0.0,
           child: OverflowBox(
-            maxHeight: _isLoaded ? widget.size.height + 0.0 : 1,
+            maxHeight: widget.size.height + 0.0,
             minHeight: 0.1,
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             child: UiKitView(
               viewType: bannerAdChannel,
               creationParams: <String, dynamic>{
@@ -86,24 +87,28 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
 
   void _onBannerAdViewCreated(int id) async {
     final channel = MethodChannel('${bannerAdChannel}_$id');
+    print("created");
+    if (widget.listener  != null) {
+      channel.setMethodCallHandler((call) {
+        switch (call.method) {
+          case bannerErrorMethod:
+            _callListener(BannerAdState.error, call.arguments);
+            break;
+          case bannerLoadedMethod:
+            // setState(() {
+            //   _isLoaded = true;
+            // });
+            _callListener(BannerAdState.loaded, call.arguments);
+            break;
+          case bannerClickedMethod:
+            _callListener(BannerAdState.clicked, call.arguments);
+            break;
+        }
+        return;
+      });
+      channel.invokeMethod(bannerSetListener);
+    }
 
-    channel.setMethodCallHandler((call) {
-      switch (call.method) {
-        case bannerErrorMethod:
-          _callListener(BannerAdState.error, call.arguments);
-          break;
-        case bannerLoadedMethod:
-          setState(() {
-            _isLoaded = true;
-          });
-          _callListener(BannerAdState.loaded, call.arguments);
-          break;
-        case bannerClickedMethod:
-          _callListener(BannerAdState.clicked, call.arguments);
-          break;
-      }
-      return;
-    });
   }
 
   void _callListener(BannerAdState result, dynamic arguments) {

@@ -24,3 +24,4 @@ const errorMethod = "error";
 const bannerErrorMethod = "banner_error";
 const bannerLoadedMethod = "banner_loaded";
 const bannerClickedMethod = "banner_clicked";
+const bannerSetListener = "banner_set_listener";

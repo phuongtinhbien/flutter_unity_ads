@@ -17,26 +17,47 @@ class UnityBanner : NSObject, FlutterPlatformView {
         self.messeneger = messeneger
         self.frame = frame
         self.viewId = viewId
-        channel = FlutterMethodChannel(name: UnityAdsConstants.BANNER_AD_CHANNEL + "_" + String(describing: args[UnityAdsConstants.PLACEMENT_ID_PARAMETER]), binaryMessenger: messeneger)
-        if self.mViewController == nil {
-            self.mViewController = (UIApplication.shared.keyWindow?.rootViewController)!;
-        }
-
+        self.channel = FlutterMethodChannel(name: UnityAdsConstants.BANNER_AD_CHANNEL + "_" + String(viewId), binaryMessenger: messeneger)
         let size = CGSize(width: 320, height: 50)
-
         bannerView = UADSBannerView(placementId: args[UnityAdsConstants.PLACEMENT_ID_PARAMETER] as! String, size:size)
-        bannerView.delegate = BannerAdListener(channel:channel)
-        bannerView.load()
-
+        bannerView.frame = CGRect(x: 0, y: 0, width: 320, height: 50.0)
     }
 
     func view() -> UIView {
+        channel.setMethodCallHandler { [weak self] (flutterMethodCall: FlutterMethodCall, flutterResult: FlutterResult) in
+                switch flutterMethodCall.method {
+                case UnityAdsConstants.BANNER_SET_LISTENER:
+                    self?.bannerView.delegate = self
+                case "dispose":
+                    self?.dispose()
+                default:
+                    flutterResult(FlutterMethodNotImplemented)
+                }
+            }
+        bannerView.load()
         return bannerView
     }
 
-
-
-
+      private func dispose() {
+            bannerView.removeFromSuperview()
+            channel.setMethodCallHandler(nil)
+        }
 
 
 }
+
+extension UnityBanner: UADSBannerViewDelegate {
+
+    public func bannerViewDidLoad (_ bannerView: UADSBannerView) {
+     channel.invokeMethod(UnityAdsConstants.BANNER_LOADED_METHOD, arguments: bannerView.placementId);
+    }
+    public  func bannerViewDidClick (_ bannerView: UADSBannerView) {
+         channel.invokeMethod(UnityAdsConstants.BANNER_CLICKED_METHOD, arguments: bannerView.placementId);
+    }
+    public func bannerViewDidLeaveApplication (_ bannerView: UADSBannerView) {
+    }
+   public func bannerViewDidError (_ bannerView: UADSBannerView, error:UADSBannerError) {
+     channel.invokeMethod(UnityAdsConstants.BANNER_ERROR_METHOD, arguments: bannerView.placementId);
+    }
+
+    }

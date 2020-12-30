@@ -44,7 +44,7 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
         height: widget.size.height + 0.0,
         width: widget.size.width + 0.0,
         child: OverflowBox(
-          maxHeight: _isLoaded ? widget.size.height + 0.0 : 1,
+          maxHeight: widget.size.height + 0.0,
           minHeight: 0.1,
           alignment: Alignment.bottomCenter,
           child: AndroidView(

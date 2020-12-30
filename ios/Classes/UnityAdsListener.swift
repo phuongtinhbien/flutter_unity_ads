@@ -15,7 +15,7 @@ public class UnityAdsListener: NSObject, UnityAdsDelegate{
     }
 
     public func unityAdsReady(_ placementId: String) {
-
+        onReady(placementId:placementId)
     }
 
     public func unityAdsDidError(_ error: UnityAdsError, withMessage message: String) {
@@ -23,10 +23,11 @@ public class UnityAdsListener: NSObject, UnityAdsDelegate{
     }
 
     public func unityAdsDidStart(_ placementId: String) {
+        onStarted(placementId:placementId)
     }
 
     public func unityAdsDidFinish(_ placementId: String, with state: UnityAdsFinishState) {
-
+        onCompleted(placementId:placementId)
     }
 
 

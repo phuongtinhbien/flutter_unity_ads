@@ -1,6 +1,6 @@
 # unity_ads_example
 
-Demonstrates how to use the unity_ads plugin.
+A new Flutter application.
 
 ## Getting Started
 

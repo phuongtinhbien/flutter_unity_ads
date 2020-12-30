@@ -25,19 +25,20 @@ public class UnityAdsPluginImpl:NSObject,FlutterPlugin {
     }
 
      public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+     if self.mViewController == nil{
+                 self.mViewController = (UIApplication.shared.keyWindow?.rootViewController)!;
+             }
         var args: Dictionary<String,Any> = [:];
         if call.arguments != nil{
             args = (call.arguments as! NSDictionary) as! Dictionary<String,Any>
         }
-
-
-             if(call.method == UnityAdsConstants.INIT_METHOD) {
-                result(initialize(args: args))
-             } else if (call.method == UnityAdsConstants.IS_READY_METHOD) {
-
-             } else if (call.method == UnityAdsConstants.SHOW_VIDEO_METHOD) {
-
-             }
+         if(call.method == UnityAdsConstants.INIT_METHOD) {
+            result(initialize(args: args))
+         } else if (call.method == UnityAdsConstants.IS_READY_METHOD) {
+            result(UnityAds.isReady())
+         } else if (call.method == UnityAdsConstants.SHOW_VIDEO_METHOD) {
+             UnityAds.show(self.mViewController!, placementId: args["placementId"] as! String);
+         }
 
       }
 
@@ -52,9 +53,6 @@ public class UnityAdsPluginImpl:NSObject,FlutterPlugin {
 
      }
 
-     func isReady (args: [String : Any]) -> Bool {
-        return true
-     }
 
 
 

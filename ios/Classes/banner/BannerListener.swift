@@ -4,6 +4,7 @@ import Flutter
 public class BannerAdListener: NSObject,UADSBannerViewDelegate {
     private let mChannel: FlutterMethodChannel
 
+
     init(channel: FlutterMethodChannel) {
         self.mChannel = channel
     }

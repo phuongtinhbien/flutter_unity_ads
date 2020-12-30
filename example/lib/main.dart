@@ -100,17 +100,17 @@ class _UnityAdsExampleState extends State<UnityAdsExample> {
 class AdManager {
   static String get gameId {
     if (Platform.isAndroid) {
-      return 'your_android_game_id';
+      return '3954207';
     }
     if (Platform.isIOS) {
-      return 'your_ios_game_id';
+      return '3954206';
     } else {
       throw new UnsupportedError('Unsupported platform');
     }
   }
 
   static String get bannerAdPlacementId {
-    return 'your_banner_ad_placement_id';
+    return 'banner_placement';
   }
 
   static String get interstitialVideoAdPlacementId {

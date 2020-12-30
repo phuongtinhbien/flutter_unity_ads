@@ -61,7 +61,6 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
       );
     } else if (Platform.isIOS) {
       return Container(
-        color: Colors.red,
           height: widget.size.height + 0.0,
           width: widget.size.width + 0.0,
           child: OverflowBox(

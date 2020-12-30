@@ -19,7 +19,7 @@ public class UnityAdsListener: NSObject, UnityAdsDelegate{
     }
 
     public func unityAdsDidError(_ error: UnityAdsError, withMessage message: String) {
-
+        onError ("",error:error,errorMessage: message )
     }
 
     public func unityAdsDidStart(_ placementId: String) {
@@ -27,7 +27,15 @@ public class UnityAdsListener: NSObject, UnityAdsDelegate{
     }
 
     public func unityAdsDidFinish(_ placementId: String, with state: UnityAdsFinishState) {
+    if(state == UnityAdsFinishState.skipped) {
+        onSkipped(placementId:placementId)
+    } else if (state == UnityAdsFinishState.completed) {
         onCompleted(placementId:placementId)
+    } else if (state == UnityAdsFinishState.error) {
+         onError(placementId, error: nil, errorMessage:"")
+    }
+
+
     }
 
 

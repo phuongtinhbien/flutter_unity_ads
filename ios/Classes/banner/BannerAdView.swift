@@ -9,7 +9,7 @@ class UnityBanner : NSObject, FlutterPlatformView {
     private let frame: CGRect
     private let viewId: Int64
     private let args: [String: Any]
-    private var bannerView: UADSBannerView
+    private var bannerView: UADSBannerView?
     private var mViewController: UIViewController?;
 
     init(frame: CGRect, viewId: Int64, args: [String: Any], messeneger: FlutterBinaryMessenger) {
@@ -20,26 +20,27 @@ class UnityBanner : NSObject, FlutterPlatformView {
         self.channel = FlutterMethodChannel(name: UnityAdsConstants.BANNER_AD_CHANNEL + "_" + String(viewId), binaryMessenger: messeneger)
         let size = CGSize(width: 320, height: 50)
         bannerView = UADSBannerView(placementId: args[UnityAdsConstants.PLACEMENT_ID_PARAMETER] as! String, size:size)
-        bannerView.frame = CGRect(x: 0, y: 0, width: 320, height: 50.0)
+        bannerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 50.0)
     }
 
     func view() -> UIView {
         channel.setMethodCallHandler { [weak self] (flutterMethodCall: FlutterMethodCall, flutterResult: FlutterResult) in
                 switch flutterMethodCall.method {
                 case UnityAdsConstants.BANNER_SET_LISTENER:
-                    self?.bannerView.delegate = self
+                    self?.bannerView?.delegate = self
                 case "dispose":
                     self?.dispose()
                 default:
                     flutterResult(FlutterMethodNotImplemented)
                 }
             }
-        bannerView.load()
-        return bannerView
+        bannerView?.load()
+        return bannerView!
     }
 
       private func dispose() {
-            bannerView.removeFromSuperview()
+            bannerView?.removeFromSuperview()
+            bannerView = nil
             channel.setMethodCallHandler(nil)
         }
 

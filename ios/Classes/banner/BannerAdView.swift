@@ -18,12 +18,13 @@ class UnityBanner : NSObject, FlutterPlatformView {
         self.frame = frame
         self.viewId = viewId
         self.channel = FlutterMethodChannel(name: UnityAdsConstants.BANNER_AD_CHANNEL + "_" + String(viewId), binaryMessenger: messeneger)
-        let size = CGSize(width: 320, height: 50)
-        bannerView = UADSBannerView(placementId: args[UnityAdsConstants.PLACEMENT_ID_PARAMETER] as! String, size:size)
-        bannerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 50.0)
+
     }
 
     func view() -> UIView {
+        let size = CGSize(width: 320, height: 50)
+        bannerView = UADSBannerView(placementId: args[UnityAdsConstants.PLACEMENT_ID_PARAMETER] as! String, size:size)
+        bannerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 50.0)
         channel.setMethodCallHandler { [weak self] (flutterMethodCall: FlutterMethodCall, flutterResult: FlutterResult) in
                 switch flutterMethodCall.method {
                 case UnityAdsConstants.BANNER_SET_LISTENER:

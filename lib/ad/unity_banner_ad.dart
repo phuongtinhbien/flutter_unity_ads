@@ -41,31 +41,34 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
   Widget build(BuildContext context) {
     if (Platform.isAndroid) {
       return Container(
-        height: widget.size.height + 0.0,
-        width: widget.size.width + 0.0,
-        child: OverflowBox(
-          maxHeight: widget.size.height + 0.0,
-          minHeight: 0.1,
-          alignment: Alignment.bottomCenter,
-          child: AndroidView(
-            viewType: bannerAdChannel,
-            creationParams: <String, dynamic>{
-              placementIdParameter: widget.placementId,
-              widthParameter: widget.size.width,
-              heightParameter: widget.size.height,
-            },
-            creationParamsCodec: StandardMessageCodec(),
-            onPlatformViewCreated: _onBannerAdViewCreated,
-          ),
-        )
-      );
+          height: widget.size.height + 0.0,
+          width: widget.size.width + 0.0,
+          child: Container(
+            constraints: BoxConstraints(
+              maxHeight: widget.size.height + 0.0,
+              minHeight: 0.1,
+            ),
+            alignment: Alignment.bottomCenter,
+            child: AndroidView(
+              viewType: bannerAdChannel,
+              creationParams: <String, dynamic>{
+                placementIdParameter: widget.placementId,
+                widthParameter: widget.size.width,
+                heightParameter: widget.size.height,
+              },
+              creationParamsCodec: StandardMessageCodec(),
+              onPlatformViewCreated: _onBannerAdViewCreated,
+            ),
+          ));
     } else if (Platform.isIOS) {
       return Container(
           height: widget.size.height + 0.0,
           width: widget.size.width + 0.0,
-          child: OverflowBox(
-            maxHeight: widget.size.height + 0.0,
-            minHeight: 0.1,
+          child: Container(
+            constraints: BoxConstraints(
+              maxHeight: widget.size.height + 0.0,
+              minHeight: 0.1,
+            ),
             alignment: Alignment.center,
             child: UiKitView(
               viewType: bannerAdChannel,
@@ -77,8 +80,7 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
               creationParamsCodec: StandardMessageCodec(),
               onPlatformViewCreated: _onBannerAdViewCreated,
             ),
-          )
-      );
+          ));
     }
 
     // return Container();
@@ -86,28 +88,24 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
 
   void _onBannerAdViewCreated(int id) async {
     final channel = MethodChannel('${bannerAdChannel}_$id');
-    print("created");
-    if (widget.listener  != null) {
-      channel.setMethodCallHandler((call) {
-        switch (call.method) {
-          case bannerErrorMethod:
-            _callListener(BannerAdState.error, call.arguments);
-            break;
-          case bannerLoadedMethod:
-            // setState(() {
-            //   _isLoaded = true;
-            // });
-            _callListener(BannerAdState.loaded, call.arguments);
-            break;
-          case bannerClickedMethod:
-            _callListener(BannerAdState.clicked, call.arguments);
-            break;
-        }
-        return;
-      });
-      channel.invokeMethod(bannerSetListener);
-    }
-
+    channel.setMethodCallHandler((call) {
+      switch (call.method) {
+        case bannerErrorMethod:
+          _callListener(BannerAdState.error, call.arguments);
+          break;
+        case bannerLoadedMethod:
+          setState(() {
+            _isLoaded = true;
+          });
+          _callListener(BannerAdState.loaded, call.arguments);
+          break;
+        case bannerClickedMethod:
+          _callListener(BannerAdState.clicked, call.arguments);
+          break;
+      }
+      return;
+    });
+    channel.invokeMethod(bannerSetListener);
   }
 
   void _callListener(BannerAdState result, dynamic arguments) {

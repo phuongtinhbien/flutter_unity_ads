@@ -3,7 +3,7 @@
 
 [Unity Ads](https://unity.com/solutions/unity-ads) plugin for Flutter Applications (Android).  This plugin is able to display Unity Banner Ads and Unity Video Ads.
 
-iOS support is in development.
+iOS support is supported.
 
 ## Getting Started
 

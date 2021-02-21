@@ -72,6 +72,7 @@ class _UnityBannerAdState extends State<UnityBannerAd> {
             alignment: Alignment.center,
             child: UiKitView(
               viewType: bannerAdChannel,
+
               creationParams: <String, dynamic>{
                 placementIdParameter: widget.placementId,
                 widthParameter: widget.size.width,

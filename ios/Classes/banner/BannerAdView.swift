@@ -23,6 +23,7 @@ class UnityBanner : NSObject, FlutterPlatformView {
 
     func view() -> UIView {
         let size = CGSize(width: 320, height: 50)
+        if (
         bannerView = UADSBannerView(placementId: args[UnityAdsConstants.PLACEMENT_ID_PARAMETER] as! String, size:size)
         bannerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 50.0)
         channel.setMethodCallHandler { [weak self] (flutterMethodCall: FlutterMethodCall, flutterResult: FlutterResult) in
